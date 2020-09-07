@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <head>
+        <title>Inicio</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <header th:replace="layout/plantilla::header"/>
+        
+        <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/agregar}">[[#{persona.crear}]]</a>
+        
+        <h2 th:text="#{persona.listar}"></h2>
+        
+        <div th:if="${personas != null and !personas.empty}">
+            <table border="1">
+                <thead>
+                    <tr>
+                        <th th:text="#{persona.nombre}"></th>
+                        <th th:text="#{persona.apellido}"></th>
+                        <th th:text="#{persona.Email}"></th>
+                        <th th:text="#{persona.Telefono}"></th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{accion.Editar}"></th>
+                        <th sec:authorize="hasRole('ROLE_ADMIN')" th:text="#{accion.Eliminar}"></th>
+                    </tr> 
+                </thead>
+                <tbody>
+                    <tr th:each="persona:${personas}">
+                        <td th:text="${persona.nombre}"></td>
+                        <td th:text="${persona.apellido}"></td>
+                        <td th:text="${persona.email}"></td>
+                        <td th:text="${persona.telefono}"></td>  
+                        <td sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/editar/} + ${persona.idPersona}" th:text="#{accion.Editar}"/>
+                        </td>
+                        <td sec:authorize="hasRole('ROLE_ADMIN')">
+                            <a th:href="@{/eliminar(idPersona=${persona.idPersona})}" th:text="#{accion.Eliminar}"/>
+                        </td>
+                    </tr>  
+                </tbody>
+            </table>
+        </div>   
+        <div th:if="${personas == null or personas.empty}">
+            <b>La lista de personas esta vacia</b> 
+        </div>
+        
+        <footer th:replace="layout/plantilla::footer"/>
+    </body>
+</html>

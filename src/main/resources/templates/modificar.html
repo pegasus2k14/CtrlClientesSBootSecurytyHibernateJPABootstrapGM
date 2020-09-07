@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Datos de la persona</title>
+        <meta charset="UTF-8"/>
+    </head>
+    <body>
+        <header th:replace="layout/plantilla::header"/>
+        <h2 th:text="#{persona.titulo2}"></h2>
+        <a th:href="@{/}" th:text="#{accion.volver}"></a>
+        <br/>
+        
+        <!-- Formulario -->
+        <form th:action="@{/guardar}" method="post" th:object="${persona}">
+            <input type="hidden"  name="idPersona" th:field="*{idPersona}"/>
+            
+            <label for="nombre" th:text="#{persona.nombre}"></label>
+            <input type="text" name="nombre" th:field="*{nombre}"/>
+            <span th:if="${#fields.hasErrors('nombre')}" th:errors="*{nombre}">Error nombre</span>
+            <br/>
+            <label for="apellido" th:text="#{persona.apellido}"></label>
+            <input type="text" name="apellido" th:field="*{apellido}"/>
+            <span th:if="${#fields.hasErrors('apellido')}" th:errors="*{apellido}">Error apellido</span>
+            <br/>
+            <label for="email" th:text="#{persona.Email}"></label>
+            <input type="text" name="email" th:field="*{email}"/>
+            <span th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Error Email</span>
+            <br/>
+            <label for="telefono" th:text="#{persona.Telefono}"></label>
+            <input type="text" name="telefono" th:field="*{telefono}"/>
+            <br/>
+            <input type="submit" name="enviar" th:value="#{accion.enviar}"/>
+        </form>
+        <footer th:replace="layout/plantilla::footer"/>
+    </body>
+</html>

@@ -32,10 +32,20 @@ public class ControladorInicio {
         log.info("Usuario que ha iniciado sesion: "+user.getUsername());
         //Recuperamos la Lista de Personas
         List<Persona> listPersona = personaService.listarPersonas();
+        
+        //Calculando el Saldo Total
+        Double saldoTotal = 0D;
+        for(Persona persona:listPersona){
+            saldoTotal += persona.getSaldo();
+        }
 
         //Agregamos la lista de instancias de Persona.java al Model
         model.addAttribute("personas", listPersona);
-
+        //Agregando Saldo Total al Model
+        model.addAttribute("saldoTotal", saldoTotal);
+        //Agregamos el total de clientes registrados
+        model.addAttribute("totalClientes", listPersona.size());
+        
         //Retornamos el nombre de la vista a desplegar
         return "index";
     }

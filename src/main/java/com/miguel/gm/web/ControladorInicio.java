@@ -53,7 +53,7 @@ public class ControladorInicio {
     //Direccionar a Agregar una nueva Persona
     @GetMapping("/agregar")
     public String agregar(Persona persona){
-        
+     
         return "modificar";
     }
     
@@ -62,7 +62,7 @@ public class ControladorInicio {
     public String modificar(Persona persona, Model model){
         //Recuperamos la Persona a modificar desde la BD
         persona = personaService.encontrarPerrsona(persona);
-        
+     
         //Agregamos la Persona obtenida al model
         model.addAttribute("persona", persona);
         return "modificar";
@@ -73,7 +73,7 @@ public class ControladorInicio {
     public String guardar(@Valid Persona persona, Errors errors){
         if(errors.hasErrors()){
             return "modificar";
-        }
+        }    
         personaService.guardar(persona);
         return "redirect:/";
     }
